@@ -30,7 +30,7 @@ if (response.status !== 200) {
 document.body.style.cssText = `
     grid-auto-rows: 1fr;
     grid-template-columns: repeat(${ppr}, 1fr);
-    gap:${gap};
+    gap:${gap}px;
 `
 
 data.posts.forEach(post => {
