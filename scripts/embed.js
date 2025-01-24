@@ -1,17 +1,13 @@
 const urlParams = new URLSearchParams(window.location.search);
-const username = urlParams.get("fav")
-var count = urlParams.get("count")
-var ppr = urlParams.get("ppr")
-var gap = urlParams.get("gap")
+const username = urlParams.get("fav");
 
-if (count === null) count = 4;
-if (ppr === null) ppr = 4;
-if (gap === null) gap = 8;
+if (username === null) throw new Error(`No username specified`);
+
+const count = urlParams.get("count") ?? 4;
 
 const response = await fetch(`https://e621.net/posts.json?tags=fav:${username} order:random limit:${count}`)
-const data = await response.json()
 
-if (response.status !== 200) {
+if (!response.ok) {
     const element = document.createElement('img');
 
     switch (response.status) {
@@ -27,14 +23,19 @@ if (response.status !== 200) {
     throw new Error(`e621 responded with code ${response.status}`);
 }
 
+const ppr = urlParams.get("ppr") ?? 4;
+const gap = urlParams.get("gap") ?? 8;
+
 document.body.style.cssText = `
-    grid-auto-rows: 1fr;
     grid-template-columns: repeat(${ppr}, 1fr);
     gap:${gap}px;
 `
 
+const data = await response.json()
+
 data.posts.forEach(post => {
     const element = document.createElement('img');
+
     if (post.file.ext === "swf") {
         element.src = "/assets/unsupported.png"
     } else if (post.sample.url === null) {
@@ -42,8 +43,10 @@ data.posts.forEach(post => {
     } else {
         element.src = post.sample.url;
     }
+
     element.addEventListener("click", () => {
         navigator.clipboard.writeText(`https://e621.net/posts/${post.id}`);
     })
+
     document.body.appendChild(element);
 });
