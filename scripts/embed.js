@@ -25,6 +25,7 @@ if (!response.ok) {
 
 const ppr = urlParams.get("ppr") ?? 4;
 const gap = urlParams.get("gap") ?? 8;
+const quality = urlParams.get("quality") ?? 8;
 
 document.body.style.cssText = `
     grid-template-columns: repeat(${ppr}, 1fr);
@@ -35,7 +36,7 @@ const data = await response.json()
 
 data.posts.forEach(post => {
     const element = document.createElement('img');
-    element.src = post.sample.url;
+    element.src = post[quality].url;
 
     element.addEventListener("click", () => {
         navigator.clipboard.writeText(`https://e621.net/posts/${post.id}`);
