@@ -5,7 +5,7 @@ if (username === null) throw new Error(`No username specified`);
 
 const count = urlParams.get("count") ?? 4;
 
-const response = await fetch(`https://e621.net/posts.json?tags=fav:${username} order:random limit:${count}`)
+const response = await fetch(`https://e621.net/posts.json?tags=fav:${username} order:random limit:${count} -young -type:swf`)
 
 if (!response.ok) {
     const element = document.createElement('img');
@@ -35,14 +35,7 @@ const data = await response.json()
 
 data.posts.forEach(post => {
     const element = document.createElement('img');
-
-    if (post.file.ext === "swf") {
-        element.src = "/assets/unsupported.png"
-    } else if (post.sample.url === null) {
-        element.src = "/assets/blacklisted.png";
-    } else {
-        element.src = post.sample.url;
-    }
+    element.src = post.sample.url;
 
     element.addEventListener("click", () => {
         navigator.clipboard.writeText(`https://e621.net/posts/${post.id}`);
