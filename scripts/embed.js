@@ -1,3 +1,10 @@
+function displayErrorMessage(message) {
+    const element = document.createElement('div');
+    element.innerHTML = `<b>Error</b>: ${message}`;
+    element.style.color = "white";
+    document.body.appendChild(element);
+}
+
 const urlParams = new URLSearchParams(window.location.search);
 const username = urlParams.get("fav");
 
@@ -8,11 +15,15 @@ const count = urlParams.get("count") ?? 4;
 const response = await fetch(`https://e621.net/posts.json?tags=fav:${username} order:random limit:${count} -young -type:swf`)
 
 if (!response.ok) {
-    const element = document.createElement('div');
-    element.innerHTML = `<b>Error</b>: e621 server responded with non 2xx code (${response.status})`;
-    element.style.color = "white"
-    document.body.appendChild(element);
+    displayErrorMessage(`e621 server responded with non 2xx code (${response.status})`);
     throw new Error(`e621 server responded with non 2xx code (${response.status})`);
+}
+
+const data = await response.json();
+
+if (data.posts.length === 0) {
+    displayErrorMessage(`e621 returned empty array. Check username for typos`);
+    throw new Error(`e621 returned empty array. Check username for typos`);
 }
 
 const ppr = urlParams.get("ppr") ?? 4;
@@ -23,8 +34,6 @@ document.body.style.cssText = `
     grid-template-columns: repeat(${ppr}, 1fr);
     gap:${gap}px;
 `
-
-const data = await response.json()
 
 data.posts.forEach(post => {
     const element = document.createElement('div');
