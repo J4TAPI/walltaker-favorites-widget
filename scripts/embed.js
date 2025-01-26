@@ -7,21 +7,12 @@ const count = urlParams.get("count") ?? 4;
 
 const response = await fetch(`https://e621.net/posts.json?tags=fav:${username} order:random limit:${count} -young -type:swf`)
 
-// TODO: If this happens, display an actual error page.
 if (!response.ok) {
-    const element = document.createElement('img');
-
-    switch (response.status) {
-        case 403:
-            element.src = "/assets/private.png";
-            break;
-        default:
-            element.src = "/assets/generalfetcherror.png";
-            break;
-    }
-
+    const element = document.createElement('div');
+    element.innerHTML = `<b>Error</b>: e621 server responded with non 2xx code (${response.status})`;
+    element.style.color = "white"
     document.body.appendChild(element);
-    throw new Error(`e621 responded with code ${response.status}`);
+    throw new Error(`e621 server responded with non 2xx code (${response.status})`);
 }
 
 const ppr = urlParams.get("ppr") ?? 4;
