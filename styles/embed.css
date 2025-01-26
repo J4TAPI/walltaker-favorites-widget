@@ -11,16 +11,35 @@ img {
   object-fit: cover;
 }
 
-div {
-  background: #2b2b2b;
-  color: #aaaaaa;
+div.image-display {
+  background-size: cover !important;
+  background-position: center !important;
+  filter: none;
+  transition: filter 0.2s ease-out;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 50%;
+  overflow: hidden;
 }
 
-img:hover,
-div:hover {
+div.image-display p {
+  display: block;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
+  color: white;
+  transition: opacity 0.2s ease-out;
+  background: #222222aa;
+  padding: 4px;
+  font-size: 75%;
+  text-wrap-mode:nowrap
+}
+
+div.image-display:hover {
+  backdrop-filter: brightness(0.6);
   cursor: copy;
+}
+
+div.image-display:hover p {
+  opacity: 1;
 }

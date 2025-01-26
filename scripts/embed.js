@@ -7,6 +7,7 @@ const count = urlParams.get("count") ?? 4;
 
 const response = await fetch(`https://e621.net/posts.json?tags=fav:${username} order:random limit:${count} -young -type:swf`)
 
+// TODO: If this happens, display an actual error page.
 if (!response.ok) {
     const element = document.createElement('img');
 
@@ -35,12 +36,22 @@ document.body.style.cssText = `
 const data = await response.json()
 
 data.posts.forEach(post => {
-    const element = document.createElement('img');
-    element.src = post[quality].url;
+    const element = document.createElement('div');
+    element.className = "image-display";
+
+    element.style.background = `url('${post[quality].url}')`;
+
+    const elementText = document.createElement('p');
+    elementText.innerHTML = "Click to copy link";
 
     element.addEventListener("click", () => {
         navigator.clipboard.writeText(`https://e621.net/posts/${post.id}`);
+        elementText.innerHTML = "✔ Link copied";
+        setTimeout(() => {
+            elementText.innerHTML = "Click to copy link";
+        }, 2000);
     })
 
+    element.appendChild(elementText);
     document.body.appendChild(element);
 });
