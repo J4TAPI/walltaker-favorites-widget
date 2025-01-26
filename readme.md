@@ -2,7 +2,7 @@
 
 A widget for Walltaker that lets you display a random selection of posts from your e621 favorites. The posts are randomized everytime the widget is loaded.
 
-⚠ This is a very rough prototype. Widgets generated right now may stop working in the future.
+⚠ WTFW is still in development. Widgets generated right now may stop working in the future.
 
 ## Features
 
