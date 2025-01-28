@@ -35,7 +35,7 @@ div.image-display p {
   text-wrap-mode:nowrap
 }
 
-div.image-display:hover {
+div.image-display[data-nocopy = "off"]:hover {
   backdrop-filter: brightness(0.6);
   cursor: copy;
 }

@@ -20,7 +20,7 @@
             <li>You can click on the images to copy the e621 link to your clipboard</li>
         </ul>
         </details>
-    <hr />
+    <hr>
     <form id="form">
       <label for="username">Your e621 username</label>
       <input type="text" id="fav" name="fav" required />
@@ -39,6 +39,9 @@
 
       <label for="gap">Gap between posts (in px)</label>
       <input type="number" id="gap" name="gap" placeholder="Defaults to 8"/>
+
+      <label for="gap">Disable "Click to copy link"</label>
+      <input type="checkbox" id="nocopy" name="nocopy"/>
       
       <input type="submit" value="Generate" />
     </form>

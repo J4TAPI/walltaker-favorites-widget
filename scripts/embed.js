@@ -6,6 +6,7 @@ function displayErrorMessage(message) {
 }
 
 const urlParams = new URLSearchParams(window.location.search);
+
 const username = urlParams.get("fav");
 
 if (username === null) throw new Error(`No username specified`);
@@ -34,6 +35,7 @@ document.body.style.cssText = `
     grid-template-columns: repeat(${ppr}, 1fr);
     gap:${gap}px;
 `
+const nocopy = urlParams.get("nocopy") ?? "off";
 
 data.posts.forEach(post => {
     const element = document.createElement('div');
@@ -41,17 +43,25 @@ data.posts.forEach(post => {
 
     element.style.background = `url('${post[quality].url}')`;
 
-    const elementText = document.createElement('p');
-    elementText.innerHTML = "Click to copy link";
+    element.setAttribute('data-nocopy', nocopy)
 
-    element.addEventListener("click", () => {
-        navigator.clipboard.writeText(`https://e621.net/posts/${post.id}`);
-        elementText.innerHTML = "✔ Link copied";
-        setTimeout(() => {
-            elementText.innerHTML = "Click to copy link";
-        }, 2000);
-    })
+    if (nocopy !== "on") {
+        const elementText = document.createElement('p');
+        elementText.innerHTML = "Click to copy link";
 
-    element.appendChild(elementText);
+        element.addEventListener("click", () => {
+            navigator.clipboard.writeText(`https://e621.net/posts/${post.id}`);
+            elementText.innerHTML = "✔ Link copied";
+            setTimeout(() => {
+                elementText.innerHTML = "Click to copy link";
+            }, 2000);
+        })
+
+        element.appendChild(elementText);
+    }
+
+
     document.body.appendChild(element);
+
+    console.log(nocopy !== "on")
 });
