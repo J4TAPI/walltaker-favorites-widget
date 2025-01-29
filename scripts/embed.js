@@ -13,7 +13,7 @@ if (username === null) throw new Error(`No username specified`);
 
 const count = urlParams.get("count") ?? 4;
 
-const response = await fetch(`https://e621.net/posts.json?tags=fav:${username} order:random limit:${count} -young -type:swf`)
+const response = await fetch(`https://e621.net/posts.json?tags=fav:${username} order:random limit:${count} -young -type:swf -type:webm`)
 
 if (!response.ok) {
     displayErrorMessage(`e621 server responded with non 2xx code (${response.status})`);
