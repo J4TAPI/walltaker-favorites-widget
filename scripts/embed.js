@@ -29,6 +29,7 @@ if (data.posts.length === 0) {
 
 const ppr = urlParams.get("ppr") ?? 4;
 const gap = urlParams.get("gap") ?? 8;
+const br = urlParams.get("br") ?? 6;
 const quality = urlParams.get("quality") ?? 8;
 
 document.body.style.cssText = `
@@ -42,6 +43,7 @@ data.posts.forEach(post => {
     element.className = "image-display";
 
     element.style.background = `url('${post[quality].url}')`;
+    element.style.borderRadius = `${br}px`;
 
     element.setAttribute('data-nocopy', nocopy)
 
@@ -60,8 +62,5 @@ data.posts.forEach(post => {
         element.appendChild(elementText);
     }
 
-
     document.body.appendChild(element);
-
-    console.log(nocopy !== "on")
 });
