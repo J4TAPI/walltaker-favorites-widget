@@ -30,7 +30,7 @@ if (data.posts.length === 0) {
 const ppr = urlParams.get("ppr") ?? 4;
 const gap = urlParams.get("gap") ?? 8;
 const br = urlParams.get("br") ?? 6;
-const quality = urlParams.get("quality") ?? 8;
+const quality = urlParams.get("quality") ?? "sample";
 
 document.body.style.cssText = `
     grid-template-columns: repeat(${ppr}, 1fr);
