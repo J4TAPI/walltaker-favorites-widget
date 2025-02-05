@@ -16,6 +16,11 @@
     <hr>
     <details>
       <summary>Autofill from widget code</summary>
+      <small>
+        If you'd like to change your widget's settings through WTFW's generator, 
+        you can paste in your current widget <b>(iframe only !)</b> here, 
+        click on 'Autofill', and change what you want.
+      </small>
       <form name="reverseForm">
         <textarea id="reverseIn" style="width: 100%" placeholder="Insert widget code here..."></textarea>
         <input type="submit" value="Autofill" />
@@ -51,13 +56,16 @@
         <option value="copy">Copy link to clipboard</option>
         <option value="tab" selected>Open in new tab</option>
       </select>
+
+      <input type="text" id="oldwidgetattribs" name="oldwidgetattribs" style="display: none;"/>
+      <script>document.getElementById("oldwidgetattribs").value = ""</script>
       
       <input type="submit" value="Generate" />
     </form>
     <hr />
     <label for="output">Your widget code: </label><br />
     <textarea id="output" readonly style="width: 100%"></textarea>
-    <label for="showcase">Preview (size may differ): </label><br />
+    <label for="showcase">Preview (may differ from actual): </label><br />
     <div id="showcase"></div>
     <hr />
     <p>Made by J4TAPI</p>

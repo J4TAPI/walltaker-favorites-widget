@@ -1,5 +1,3 @@
-const reverseInBox = document.getElementById("reverseIn");
-
 function widgetIsValid(element) {
     if (element.tagName !== "IFRAME") return false;
     const url = new URL(element.src);
@@ -11,6 +9,9 @@ function widgetIsValid(element) {
 
 document.reverseForm.addEventListener("submit", (e) => {
     e.preventDefault();
+
+    const reverseInBox = document.getElementById("reverseIn");
+    const oldWidgetAttribsBox = document.getElementById("oldwidgetattribs");
 
     const temp = document.createElement('p')
     temp.innerHTML = reverseInBox.value;
@@ -29,4 +30,15 @@ document.reverseForm.addEventListener("submit", (e) => {
             document.generateForm[key].value = value;
         }
     }
+
+    const widgetAttributes = {}
+    for (let i = 0; i < widget.attributes.length; i++) {
+        const attribute = widget.attributes[i];
+        if (attribute.nodeName === "src") continue;
+        widgetAttributes[attribute.nodeName] = attribute.nodeValue
+    }
+
+    console.log(widgetAttributes)
+ 
+    oldWidgetAttribsBox.value = JSON.stringify(widgetAttributes);
 })
