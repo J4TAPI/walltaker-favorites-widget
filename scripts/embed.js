@@ -14,7 +14,8 @@ function getUrlParameters() {
         gap: 8,
         br: 6,
         quality: "sample",
-        clickact: null,
+        clickact: "copy",
+        nocopy: "off",
         ...searchParams
     }
 }
@@ -72,18 +73,15 @@ data.posts.forEach(post => {
     element.style.background = `url('${post[urlParams.quality].url}')`;
     element.style.borderRadius = `${urlParams.br}px`;
 
-    /* 'nocopy' is deprecated, but we should still honor it */
-    if (Object.hasOwn(urlParams, 'nocopy')) {
-        if (urlParams.nocopy !== "on") {
-            addCopyAction(post, element);
-        } 
-    } else {
+    if (urlParams.nocopy !== "on") {
         switch (urlParams.clickact) {
             case "copy":
                 addCopyAction(post, element);
                 break;
             case "tab":
                 addNewTabAction(post, element);
+                break
+            case "0":
                 break
             default:
                 break;
