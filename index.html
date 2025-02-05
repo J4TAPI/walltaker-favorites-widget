@@ -13,15 +13,16 @@
     </p>
     <p>⚠ WTFW is still in development. Widgets generated right now may stop working in the future.
     </p>
-    <details>
-        <summary>Features</summary>
-        <ul>
-            <li>You can apply custom width and height to the widget via CSS, and everything should still display correctly. The preview box here is resizable (there should be a small handle on the bottom right corner), give it a shot !</li>
-            <li>You can click on the images to copy the e621 link to your clipboard</li>
-        </ul>
-        </details>
     <hr>
-    <form id="form">
+    <details>
+      <summary>Autofill from widget code</summary>
+      <form name="reverseForm">
+        <textarea id="reverseIn" style="width: 100%" placeholder="Insert widget code here..."></textarea>
+        <input type="submit" value="Autofill" />
+      </form>
+    </details>
+    <hr>
+    <form name="generateForm">
       <label for="username">Your e621 username</label>
       <input type="text" id="fav" name="fav" required />
 
@@ -33,8 +34,9 @@
 
       <label for="quality">Image quality</label>
       <select name="quality" id="quality">
-        <option value="sample">Sample - Suitable when displaying few/large images</option>
-        <option value="preview">Preview - Suitable when displaying a lot of/smaller images.</option>
+        <option value="file">High - Not recommended</option>
+        <option value="sample" selected>Medium - Recommended for fewer/larger images</option>
+        <option value="preview">Low - Recommended for more/smaller images</option>
       </select>
 
       <label for="gap">Border rounding (in px)</label>
@@ -43,12 +45,16 @@
       <label for="gap">Gap between posts (in px)</label>
       <input type="number" id="gap" name="gap" placeholder="Defaults to 8"/>
 
-      <label for="gap">Disable "Click to copy link"</label>
-      <input type="checkbox" id="nocopy" name="nocopy"/>
+      <label for="clickact">On Click Action</label>
+      <select name="clickact" id="clickact">
+        <option value="none">Nothing</option>
+        <option value="copy">Copy link to clipboard</option>
+        <option value="tab" selected>Open in new tab</option>
+      </select>
       
       <input type="submit" value="Generate" />
     </form>
-    <br/>
+    <hr />
     <label for="output">Your widget code: </label><br />
     <textarea id="output" readonly style="width: 100%"></textarea>
     <label for="showcase">Preview (size may differ): </label><br />
@@ -56,5 +62,6 @@
     <hr />
     <p>Made by J4TAPI</p>
     <script src="/scripts/generate.js"></script>
+    <script src="/scripts/reverse.js"></script>
   </body>
 </html>

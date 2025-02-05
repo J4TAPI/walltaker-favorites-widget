@@ -1,14 +1,13 @@
-const form = document.getElementById("form");
 const outputBox = document.getElementById("output");
 const showcaseBox = document.getElementById("showcase");
 
-form.addEventListener("submit", (e) => {
+document.generateForm.addEventListener("submit", (e) => {
     e.preventDefault();
     
     const url = new URL(window.location.href);
     url.pathname = "/embed.html"
 
-    const data = new FormData(form);
+    const data = new FormData(document.generateForm);
     for (var [key, value] of data.entries()) {
         if (value !== "") {
             url.searchParams.append(key, value);
