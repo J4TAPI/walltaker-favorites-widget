@@ -45,7 +45,10 @@ function addNewTabAction(post, element) {
 
 const urlParams = getUrlParameters();
 
-if (urlParams.fav === null) throw new Error(`No username specified`);
+if (urlParams.fav === null) {
+    displayErrorMessage(`No username specified`);
+    throw new Error(`No username specified`);
+}
 
 const response = await fetch(`https://e621.net/posts.json?tags=fav:${urlParams.fav} order:random limit:${urlParams.count} -young -type:swf -type:webm`)
 

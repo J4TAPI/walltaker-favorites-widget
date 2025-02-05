@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer Sandbox</title>
+    <style>
+        form[name="generateForm"] {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            row-gap: 8px;
+        }
+
+        div#showcase {
+            resize: both;
+            overflow: hidden;
+            background: black;
+          }
+
+          iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+          }
+    </style>
+</head>
+<body>
+    <form name="reverseForm">
+        <label for="reverseIn">Widget In</label><br>
+        <textarea id="reverseIn" style="width: 100%" placeholder="Insert widget code here..."></textarea>
+        <input type="checkbox" name="isvalid" id="isvalid">
+        <label for="isvalid">Is valid (skip validation)</label><br>
+        <input type="submit" value="Autofill" />
+      </form>
+      <hr>
+    <form name="generateForm">
+        <label for="username">Your e621 username</label>
+        <input type="text" id="fav" name="fav" />
+  
+        <label for="count"># of posts</label>
+        <input type="number" id="count" name="count" placeholder="Defaults to 4" min="1" max="320"/>
+  
+        <label for="ppr">Posts per row</label>
+        <input type="number" id="ppr" name="ppr" placeholder="Defaults to 4" min="1" max="320"/>
+  
+        <label for="quality">Image quality</label>
+        <input type="text" id="quality" name="quality" placeholder="file|sample|preview"/>
+  
+        <label for="gap">Border rounding (in px)</label>
+        <input type="number" id="br" name="br" placeholder="Defaults to 6"/>
+  
+        <label for="gap">Gap between posts (in px)</label>
+        <input type="number" id="gap" name="gap" placeholder="Defaults to 8"/>
+  
+        <label for="clickact">On Click Action</label>
+        <input type="text" id="clickact" name="clickact" placeholder="0|copy|tab"/>
+
+        <label for="nocopy">nocopy (deprecated)</label>
+        <input type="checkbox" name="nocopy" id="nocopy">
+  
+        <input type="text" id="oldwidgetattribs" name="oldwidgetattribs"/>
+        
+        <input type="submit" value="Generate" />
+      </form>
+      <label for="output">Widget Out: </label><br />
+      <textarea id="output" readonly style="width: 100%"></textarea>
+      <label for="showcase">Preview: </label><br />
+      <div id="showcase"></div>
+      <script src="/scripts/generate.js"></script>
+      <script src="/scripts/reverse.js"></script>
+</body>
+</html>

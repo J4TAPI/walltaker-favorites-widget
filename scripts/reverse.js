@@ -16,11 +16,13 @@ attribsTransferBox.value = "";
 document.reverseForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
+    const data = new FormData(document.generateForm);
+
     const temp = document.createElement('p')
     temp.innerHTML = reverseInBox.value;
 
     const widget = temp.firstChild;
-    if(!widgetIsValid(widget)) {
+    if(!widgetIsValid(widget) && data.get("isvalid") == false) {
         alert("Not a valid widget");
         return;
     }
