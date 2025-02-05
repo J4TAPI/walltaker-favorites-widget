@@ -1,3 +1,6 @@
+const reverseInBox = document.getElementById("reverseIn");
+const attribsTransferBox = document.getElementById("oldwidgetattribs");
+
 function widgetIsValid(element) {
     if (element.tagName !== "IFRAME") return false;
     const url = new URL(element.src);
@@ -7,11 +10,11 @@ function widgetIsValid(element) {
     return true;
 }
 
+reverseInBox.value = "";
+attribsTransferBox.value = "";
+
 document.reverseForm.addEventListener("submit", (e) => {
     e.preventDefault();
-
-    const reverseInBox = document.getElementById("reverseIn");
-    const oldWidgetAttribsBox = document.getElementById("oldwidgetattribs");
 
     const temp = document.createElement('p')
     temp.innerHTML = reverseInBox.value;
@@ -40,5 +43,5 @@ document.reverseForm.addEventListener("submit", (e) => {
 
     console.log(widgetAttributes)
  
-    oldWidgetAttribsBox.value = JSON.stringify(widgetAttributes);
+    attribsTransferBox.value = JSON.stringify(widgetAttributes);
 })
