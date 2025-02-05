@@ -24,7 +24,7 @@ document.reverseForm.addEventListener("submit", (e) => {
     const url = new URL(widget.src);
     for (var [key, value] of url.searchParams.entries()) {
         if (key === "nocopy") {
-            document.generateForm["clickact"].value = (value === "on") ? "none" : "copy";
+            document.generateForm["clickact"].value = (value === "on") ? "" : "copy";
         } else {
             document.generateForm[key].value = value;
         }

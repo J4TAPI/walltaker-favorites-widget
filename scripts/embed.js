@@ -14,7 +14,7 @@ function getUrlParameters() {
         gap: 8,
         br: 6,
         quality: "sample",
-        clickact: "tab",
+        clickact: null,
         ...searchParams
     }
 }
