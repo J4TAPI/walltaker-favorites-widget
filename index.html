@@ -21,44 +21,43 @@
         you can paste in your current widget <b>(iframe only !)</b> here, 
         click on 'Autofill', change what you want, and Generate the widget again.
       </small>
-      <form name="reverseForm">
-        <textarea id="reverseIn" style="width: 100%" placeholder="Insert widget code here..."></textarea>
+      <form name="autofillForm">
+        <textarea name="widgetCode" style="width: 100%" placeholder="Insert widget code here..."></textarea>
         <input type="submit" value="Autofill" />
       </form>
     </details>
     <hr>
     <form name="generateForm">
       <label for="username">Your e621 username</label>
-      <input type="text" id="fav" name="fav" required />
+      <input type="text" name="fav" required />
 
       <label for="count"># of posts</label>
-      <input type="number" id="count" name="count" placeholder="Defaults to 4" min="1" max="320"/>
+      <input type="number" name="count" placeholder="Defaults to 4" min="1" max="320"/>
 
       <label for="ppr">Posts per row</label>
-      <input type="number" id="ppr" name="ppr" placeholder="Defaults to 4" min="1" max="320"/>
+      <input type="number" name="ppr" placeholder="Defaults to 4" min="1" max="320"/>
 
       <label for="quality">Image quality</label>
-      <select name="quality" id="quality">
+      <select name="quality">
         <option value="file">High - Not recommended</option>
         <option value="sample" selected>Medium - Recommended for fewer/larger images</option>
         <option value="preview">Low - Recommended for more/smaller images</option>
       </select>
 
       <label for="gap">Border rounding (in px)</label>
-      <input type="number" id="br" name="br" placeholder="Defaults to 6"/>
+      <input type="number" name="br" placeholder="Defaults to 6"/>
 
       <label for="gap">Gap between posts (in px)</label>
-      <input type="number" id="gap" name="gap" placeholder="Defaults to 8"/>
+      <input type="number" name="gap" placeholder="Defaults to 8"/>
 
-      <label for="clickact">On Click Action</label>
-      <select name="clickact" id="clickact">
+      <label for="act">On Click Action</label>
+      <select name="act">
         <option value="0">Nothing</option>
-        <option value="copy" selected>Copy link to clipboard</option>
-        <option value="tab">Open in new tab</option>
+        <option value="copy">Copy link to clipboard</option>
+        <option value="tab" selected>Open in new tab</option>
       </select>
 
-      <input type="text" id="oldwidgetattribs" name="oldwidgetattribs" style="display: none;"/>
-      <script>document.getElementById("oldwidgetattribs").value = ""</script>
+      <input type="text" name="otherattribs" aria-hidden="true" style="display:none;"/>
       
       <input type="submit" value="Generate" />
     </form>

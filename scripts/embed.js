@@ -14,7 +14,7 @@ function getUrlParameters() {
         gap: 8,
         br: 6,
         quality: "sample",
-        clickact: "copy",
+        act: "copy",
         nocopy: "off",
         ...searchParams
     }
@@ -77,14 +77,12 @@ data.posts.forEach(post => {
     element.style.borderRadius = `${urlParams.br}px`;
 
     if (urlParams.nocopy !== "on") {
-        switch (urlParams.clickact) {
+        switch (urlParams.act) {
             case "copy":
                 addCopyAction(post, element);
                 break;
             case "tab":
                 addNewTabAction(post, element);
-                break
-            case "0":
                 break
             default:
                 break;

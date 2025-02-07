@@ -1,36 +1,33 @@
-const reverseInBox = document.getElementById("reverseIn");
-const attribsTransferBox = document.getElementById("oldwidgetattribs");
-
 function widgetIsValid(element) {
     if (element.tagName !== "IFRAME") return false;
     const url = new URL(element.src);
-    if (url.host !== window.location.host) return false;
     if (url.pathname !== "/embed.html") return false;
     
     return true;
 }
 
-reverseInBox.value = "";
-attribsTransferBox.value = "";
+document.autofillForm.reset();
 
-document.reverseForm.addEventListener("submit", (e) => {
+document.autofillForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const data = new FormData(document.generateForm);
+    const data = new FormData(document.autofillForm);
 
-    const temp = document.createElement('p')
-    temp.innerHTML = reverseInBox.value;
-
-    const widget = temp.firstChild;
-    if(!widgetIsValid(widget) && data.get("isvalid") == false) {
+    const widget = new DOMParser().parseFromString(data.get("widgetCode"), "text/html").body.firstChild;
+    if(!widgetIsValid(widget)) {
         alert("Not a valid widget");
         return;
     }
 
     const url = new URL(widget.src);
+
+    if (!Object.hasOwn(url.searchParams, "act")) {
+        document.generateForm["act"].value = "copy";
+    }
+
     for (var [key, value] of url.searchParams.entries()) {
         if (key === "nocopy") {
-            document.generateForm["clickact"].value = (value === "on") ? "" : "copy";
+            document.generateForm["act"].value = (value === "on") ? "0" : "copy";
         } else {
             document.generateForm[key].value = value;
         }
@@ -42,8 +39,6 @@ document.reverseForm.addEventListener("submit", (e) => {
         if (attribute.nodeName === "src") continue;
         widgetAttributes[attribute.nodeName] = attribute.nodeValue
     }
-
-    console.log(widgetAttributes)
  
-    attribsTransferBox.value = JSON.stringify(widgetAttributes);
+    document.generateForm.otherattribs.value = JSON.stringify(widgetAttributes);
 })

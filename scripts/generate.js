@@ -1,6 +1,7 @@
 const outputBox = document.getElementById("output");
 const showcaseBox = document.getElementById("showcase");
-const oldWidgetAttribsBox = document.getElementById("oldwidgetattribs")
+
+document.generateForm.reset();
 
 document.generateForm.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -10,7 +11,7 @@ document.generateForm.addEventListener("submit", (e) => {
 
     const data = new FormData(document.generateForm);
     for (var [key, value] of data.entries()) {
-        if (key === "oldwidgetattribs") continue;
+        if (key === "otherattribs") continue;
         if (value !== "") {
             url.searchParams.append(key, value);
         }
@@ -21,10 +22,10 @@ document.generateForm.addEventListener("submit", (e) => {
 
     widget.style.cssText = "width:100%;height:166px;border:none;"
 
-    if (oldWidgetAttribsBox.value !== "") {
-        const oldWidgetAttribs = JSON.parse(oldWidgetAttribsBox.value);
-        console.log(oldWidgetAttribs);
-        for (var [key, value] of Object.entries(oldWidgetAttribs)) {
+    const attribs = data.get("otherattribs")
+    if (attribs !== "") {
+        const attribsData = JSON.parse(attribs)
+        for (var [key, value] of Object.entries(attribsData)) {
             try {
                 widget.setAttribute(key, value);
             } catch (error) {
