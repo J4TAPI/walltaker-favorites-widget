@@ -35,9 +35,13 @@ div.image-display p {
   text-wrap-mode:nowrap
 }
 
-div.image-display[data-nocopy = "off"]:hover {
+div.image-display[data-action = "copy"]:hover {
   backdrop-filter: brightness(0.6);
   cursor: copy;
+}
+
+div.image-display[data-action = "tab"]:hover {
+  cursor: pointer;
 }
 
 div.image-display:hover p {

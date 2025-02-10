@@ -5,15 +5,52 @@ function displayErrorMessage(message) {
     document.body.appendChild(element);
 }
 
-const urlParams = new URLSearchParams(window.location.search);
+function getUrlParameters() {
+    const searchParams = Object.fromEntries(new URLSearchParams(window.location.search));
+    return {
+        fav: null, 
+        count: 4, 
+        ppr: 4,
+        gap: 8,
+        br: 6,
+        quality: "sample",
+        act: "copy",
+        nocopy: "off",
+        ...searchParams
+    }
+}
 
-const username = urlParams.get("fav");
+function addCopyAction(post, element) {
+    const elementText = document.createElement('p');
+    elementText.innerHTML = "Click to copy link";
 
-if (username === null) throw new Error(`No username specified`);
+    element.addEventListener("click", () => {
+        navigator.clipboard.writeText(`https://e621.net/posts/${post.id}`);
+        elementText.innerHTML = "✔ Link copied";
+        setTimeout(() => {
+            elementText.innerHTML = "Click to copy link";
+        }, 2000);
+    })
 
-const count = urlParams.get("count") ?? 4;
+    element.setAttribute('data-action', "copy")
+    element.appendChild(elementText);
+}
 
-const response = await fetch(`https://e621.net/posts.json?tags=fav:${username} order:random limit:${count} -young -type:swf -type:webm`)
+function addNewTabAction(post, element) {
+    element.addEventListener("click", () => {
+        window.open(`https://e621.net/posts/${post.id}`);
+    })
+    element.setAttribute('data-action', "tab")
+}
+
+const urlParams = getUrlParameters();
+
+if (urlParams.fav === null) {
+    displayErrorMessage(`No username specified`);
+    throw new Error(`No username specified`);
+}
+
+const response = await fetch(`https://e621.net/posts.json?tags=fav:${urlParams.fav} order:random limit:${urlParams.count} -young -type:swf -type:webm`)
 
 if (!response.ok) {
     displayErrorMessage(`e621 server responded with non 2xx code (${response.status})`);
@@ -27,39 +64,29 @@ if (data.posts.length === 0) {
     throw new Error(`e621 returned empty array. Check username for typos`);
 }
 
-const ppr = urlParams.get("ppr") ?? 4;
-const gap = urlParams.get("gap") ?? 8;
-const br = urlParams.get("br") ?? 6;
-const quality = urlParams.get("quality") ?? "sample";
-
 document.body.style.cssText = `
-    grid-template-columns: repeat(${ppr}, 1fr);
-    gap:${gap}px;
+    grid-template-columns: repeat(${urlParams.ppr}, 1fr);
+    gap:${urlParams.gap}px;
 `
-const nocopy = urlParams.get("nocopy") ?? "off";
 
 data.posts.forEach(post => {
     const element = document.createElement('div');
     element.className = "image-display";
 
-    element.style.background = `url('${post[quality].url}')`;
-    element.style.borderRadius = `${br}px`;
+    element.style.background = `url('${post[urlParams.quality].url}')`;
+    element.style.borderRadius = `${urlParams.br}px`;
 
-    element.setAttribute('data-nocopy', nocopy)
-
-    if (nocopy !== "on") {
-        const elementText = document.createElement('p');
-        elementText.innerHTML = "Click to copy link";
-
-        element.addEventListener("click", () => {
-            navigator.clipboard.writeText(`https://e621.net/posts/${post.id}`);
-            elementText.innerHTML = "✔ Link copied";
-            setTimeout(() => {
-                elementText.innerHTML = "Click to copy link";
-            }, 2000);
-        })
-
-        element.appendChild(elementText);
+    if (urlParams.nocopy !== "on") {
+        switch (urlParams.act) {
+            case "copy":
+                addCopyAction(post, element);
+                break;
+            case "tab":
+                addNewTabAction(post, element);
+                break
+            default:
+                break;
+        }
     }
 
     document.body.appendChild(element);
