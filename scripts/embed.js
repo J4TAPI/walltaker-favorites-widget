@@ -8,7 +8,8 @@ function displayErrorMessage(message) {
 function getUrlParameters() {
     const searchParams = Object.fromEntries(new URLSearchParams(window.location.search));
     return {
-        fav: null, 
+        fav: null,
+        q: "",
         count: 4, 
         ppr: 4,
         gap: 8,
@@ -50,7 +51,7 @@ if (urlParams.fav === null) {
     throw new Error(`No username specified`);
 }
 
-const response = await fetch(`https://e621.net/posts.json?tags=fav:${urlParams.fav} order:random limit:${urlParams.count} -young -type:swf -type:webm`)
+const response = await fetch(`https://e621.net/posts.json?tags=fav:${urlParams.fav} ${urlParams.q} order:random limit:${urlParams.count} -young -type:swf -type:webm`)
 
 if (!response.ok) {
     displayErrorMessage(`e621 server responded with non 2xx code (${response.status})`);

@@ -26,7 +26,20 @@ document.autofillForm.addEventListener("submit", (e) => {
     }
 
     for (var [key, value] of url.searchParams.entries()) {
-        if (key === "nocopy") {
+        if (key === "fav") {
+            /*
+                You could (and still can) put an e621 query into the username box after the actual name.
+                If a widget ran through reverser uses this, separate that query from the username value and
+                put it into the proper box. 
+            */
+            let [username, ...query] = value.split(" ");
+
+            if (query.length !== 0) {
+                document.generateForm["q"].value = query.join(" ");
+            }
+
+            document.generateForm["fav"].value = username;
+        } else if (key === "nocopy") {
             document.generateForm["act"].value = (value === "on") ? "0" : "copy";
         } else {
             document.generateForm[key].value = value;

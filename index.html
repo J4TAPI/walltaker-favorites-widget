@@ -29,8 +29,11 @@
     </details>
     <hr>
     <form name="generateForm">
-      <label for="username">Your e621 username</label>
+      <label for="fav">Your e621 username</label>
       <input type="text" name="fav" required />
+      
+      <label for="q">Filter <small>(e621 query; 34 tags MAX)</small></label>
+      <input type="text" name="q"/>
 
       <label for="count"># of posts</label>
       <input type="number" name="count" placeholder="Defaults to 4" min="1" max="320"/>
@@ -45,10 +48,10 @@
         <option value="preview">Low - Recommended for more/smaller images</option>
       </select>
 
-      <label for="gap">Border rounding (in px)</label>
+      <label for="gap">Border rounding <small>(in px)</small></label>
       <input type="number" name="br" placeholder="Defaults to 6"/>
 
-      <label for="gap">Gap between posts (in px)</label>
+      <label for="gap">Gap between posts <small>(in px)</small></label>
       <input type="number" name="gap" placeholder="Defaults to 8"/>
 
       <label for="act">On Click Action</label>
@@ -69,7 +72,7 @@
     <div id="showcase"></div>
     <hr />
     <p>Made by J4TAPI</p>
-    <p>Version 1.1</p>
+    <p>Version 1.2</p>
     <script src="/scripts/generate.js"></script>
     <script src="/scripts/reverse.js"></script>
   </body>
