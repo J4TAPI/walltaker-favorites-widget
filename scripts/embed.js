@@ -5,6 +5,28 @@ function displayErrorMessage(message) {
     document.body.appendChild(element);
 }
 
+function translateVideoQualities(postData) {
+    
+    const available = postData.sample.alternates;
+
+    let qualities = {
+        file: postData.file.url,
+        sample: postData.file.url,
+        preview: postData.file.url
+    }
+
+    if (Object.hasOwn(available, "480p")) {
+        qualities.sample = available["480p"].urls[0]
+        qualities.preview = available["480p"].urls[0]
+    }
+
+    if (Object.hasOwn(available, "720p")) {
+        qualities.sample = available["720p"].urls[0]
+    }
+
+    return qualities;
+}
+
 function getUrlParameters() {
     const searchParams = Object.fromEntries(new URLSearchParams(window.location.search));
     return {
@@ -17,24 +39,18 @@ function getUrlParameters() {
         quality: "sample",
         act: "copy",
         nocopy: "off",
+        video: null,
         ...searchParams
     }
 }
 
 function addCopyAction(post, element) {
-    const elementText = document.createElement('p');
-    elementText.innerHTML = "Click to copy link";
-
     element.addEventListener("click", () => {
         navigator.clipboard.writeText(`https://e621.net/posts/${post.id}`);
-        elementText.innerHTML = "✔ Link copied";
-        setTimeout(() => {
-            elementText.innerHTML = "Click to copy link";
-        }, 2000);
     })
 
     element.setAttribute('data-action', "copy")
-    element.appendChild(elementText);
+    element.setAttribute('title', `Click to copy #${post.id}'s link`)
 }
 
 function addNewTabAction(post, element) {
@@ -42,6 +58,7 @@ function addNewTabAction(post, element) {
         window.open(`https://e621.net/posts/${post.id}`);
     })
     element.setAttribute('data-action', "tab")
+    element.setAttribute('title', `Click to open #${post.id} in a new tab`)
 }
 
 const urlParams = getUrlParameters();
@@ -51,7 +68,7 @@ if (urlParams.fav === null) {
     throw new Error(`No username specified`);
 }
 
-const response = await fetch(`https://e621.net/posts.json?tags=fav:${urlParams.fav} ${urlParams.q} order:random limit:${urlParams.count} -young -type:swf -type:webm`)
+const response = await fetch(`https://e621.net/posts.json?tags=fav:${urlParams.fav} ${urlParams.q} order:random limit:${urlParams.count} -young -type:swf ${urlParams.video === null ? '-type:webm' : ''}`)
 
 if (!response.ok) {
     displayErrorMessage(`e621 server responded with non 2xx code (${response.status})`);
@@ -71,10 +88,29 @@ document.body.style.cssText = `
 `
 
 data.posts.forEach(post => {
-    const element = document.createElement('div');
-    element.className = "image-display";
 
-    element.style.background = `url('${post[urlParams.quality].url}')`;
+    let element;
+
+    if (post.file.ext === "webm") {
+        element = document.createElement('video');
+        element.className = "video-display";
+
+        let sources = translateVideoQualities(post);
+        element.src = sources[urlParams.quality];
+
+        element.poster = post.preview.url;
+
+        element.autoplay = true;
+        element.disablePictureInPicture = true;
+        element.loop = true;
+        element.muted = true;
+    } else {
+        element = document.createElement('img')
+        element.className = "image-display";
+
+        element.src = post[urlParams.quality].url
+    }
+
     element.style.borderRadius = `${urlParams.br}px`;
 
     if (urlParams.nocopy !== "on") {

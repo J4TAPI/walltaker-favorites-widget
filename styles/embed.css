@@ -5,45 +5,18 @@ body {
   grid-auto-rows: 1fr;
 }
 
-img {
+img, video {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-div.image-display {
-  background-size: cover !important;
-  background-position: center !important;
-  filter: none;
-  transition: filter 0.2s ease-out;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-}
-
-div.image-display p {
-  display: block;
-  margin: 0;
-  opacity: 0;
-  pointer-events: none;
-  color: white;
-  transition: opacity 0.2s ease-out;
-  background: #222222aa;
-  padding: 4px;
-  font-size: 75%;
-  text-wrap-mode:nowrap
-}
-
-div.image-display[data-action = "copy"]:hover {
-  backdrop-filter: brightness(0.6);
+img[data-action = "copy"]:hover,
+video[data-action = "copy"]:hover {
   cursor: copy;
 }
 
-div.image-display[data-action = "tab"]:hover {
+img[data-action = "tab"]:hover,
+video[data-action = "tab"]:hover {
   cursor: pointer;
-}
-
-div.image-display:hover p {
-  opacity: 1;
 }

@@ -41,6 +41,8 @@ document.autofillForm.addEventListener("submit", (e) => {
             document.generateForm["fav"].value = username;
         } else if (key === "nocopy") {
             document.generateForm["act"].value = (value === "on") ? "0" : "copy";
+        } else if (key === "video") {
+            document.generateForm["video"].checked = true;
         } else {
             document.generateForm[key].value = value;
         }
