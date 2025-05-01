@@ -1,4 +1,4 @@
-function widgetIsValid(element) {
+function isValidIframe(element) {
     if (element.tagName !== "IFRAME") return false;
     const url = new URL(element.src);
     if (url.pathname !== "/embed.html") return false;
@@ -14,7 +14,7 @@ document.autofillForm.addEventListener("submit", (e) => {
     const data = new FormData(document.autofillForm);
 
     const widget = new DOMParser().parseFromString(data.get("widgetCode"), "text/html").body.firstChild;
-    if(!widgetIsValid(widget)) {
+    if(!isValidIframe(widget)) {
         alert("Not a valid widget");
         return;
     }

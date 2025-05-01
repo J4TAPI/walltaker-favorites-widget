@@ -68,7 +68,7 @@ if (urlParams.fav === null) {
     throw new Error(`No username specified`);
 }
 
-const response = await fetch(`https://e621.net/posts.json?tags=fav:${urlParams.fav} ${urlParams.q} order:random limit:${urlParams.count} -young -type:swf ${urlParams.video === null ? '-type:webm' : ''}`)
+const response = await fetch(`https://e621.net/posts.json?tags=fav:${urlParams.fav} ${urlParams.q} order:random limit:${urlParams.count} -young -type:swf ${urlParams.video === null ? '-type:webm -type:mp4' : ''}`)
 
 if (!response.ok) {
     displayErrorMessage(`e621 server responded with non 2xx code (${response.status})`);
@@ -91,7 +91,7 @@ data.posts.forEach(post => {
 
     let element;
 
-    if (post.file.ext === "webm") {
+    if (post.file.ext === "webm" || post.file.ext === "mp4") {
         element = document.createElement('video');
         element.className = "video-display";
 
