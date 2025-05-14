@@ -9,7 +9,7 @@ function displayErrorMessage(message) {
 
 function translateVideoQualities(postData) {
     
-    const available = postData.sample.alternates;
+    const available = postData.sample.alternates.samples; // Why
 
     let qualities = {
         file: postData.file.url,
@@ -18,12 +18,12 @@ function translateVideoQualities(postData) {
     }
 
     if (Object.hasOwn(available, "480p")) {
-        qualities.sample = available["480p"].urls[0]
-        qualities.preview = available["480p"].urls[0]
+        qualities.sample = available["480p"].url
+        qualities.preview = available["480p"].url
     }
 
     if (Object.hasOwn(available, "720p")) {
-        qualities.sample = available["720p"].urls[0]
+        qualities.sample = available["720p"].url
     }
 
     return qualities;
