@@ -1,7 +1,11 @@
 body {
-  display: grid;
   margin: 0;
   height: 100vh;
+}
+
+main {
+  height: 100%;
+  display: grid;
   grid-auto-rows: 1fr;
 }
 
@@ -19,4 +23,20 @@ video[data-action = "copy"]:hover {
 img[data-action = "tab"]:hover,
 video[data-action = "tab"]:hover {
   cursor: pointer;
+}
+
+div.error {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+div.error p {
+  background: black;
 }

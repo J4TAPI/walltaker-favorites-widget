@@ -1,7 +1,9 @@
+const body = document.getElementById("body")
+
 function displayErrorMessage(message) {
     const element = document.createElement('div');
-    element.innerHTML = `<b>Error</b>: ${message}`;
-    element.style.color = "white";
+    element.classList.add("error")
+    element.innerHTML = `<p><b>Error</b>: ${message}</p>`;
     document.body.appendChild(element);
 }
 
@@ -71,18 +73,36 @@ if (urlParams.fav === null) {
 const response = await fetch(`https://e621.net/posts.json?tags=fav:${urlParams.fav} ${urlParams.q} order:random limit:${urlParams.count} -young -type:swf ${urlParams.video === null ? '-type:webm -type:mp4' : ''}`)
 
 if (!response.ok) {
-    displayErrorMessage(`e621 server responded with non 2xx code (${response.status})`);
-    throw new Error(`e621 server responded with non 2xx code (${response.status})`);
+
+    switch (response.status) {
+        case 403:
+            displayErrorMessage(`This user's favorties are unavailable, or e621's API is currently unavailable (403)`);
+            break;
+        case 503:
+            displayErrorMessage(`e621 may be in maintenance mode, or you may be rate limited. (503)`);
+            break;
+        case 521:
+            displayErrorMessage(`e621's server may be down (521)`)
+            break;
+        case 524:
+            displayErrorMessage(`e621 took too long to respond to CloudFlare (524)`)
+            break;
+        default:
+            displayErrorMessage(`e621 responded with non-2xx code (${response.status})`);
+            break;
+    }
+    
+    throw new Error(`e621 responded with code ${response.status}`);
 }
 
 const data = await response.json();
 
 if (data.posts.length === 0) {
-    displayErrorMessage(`e621 returned empty array. Check username for typos`);
-    throw new Error(`e621 returned empty array. Check username for typos`);
+    displayErrorMessage(`e621 didn't return any posts. Check widget settings`);
+    throw new Error(`e621 didn't return any posts. Check widget settings`);
 }
 
-document.body.style.cssText = `
+body.style.cssText = `
     grid-template-columns: repeat(${urlParams.ppr}, 1fr);
     gap:${urlParams.gap}px;
 `
@@ -126,5 +146,5 @@ data.posts.forEach(post => {
         }
     }
 
-    document.body.appendChild(element);
+    body.appendChild(element);
 });
