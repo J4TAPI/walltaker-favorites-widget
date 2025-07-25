@@ -108,6 +108,9 @@ body.style.cssText = `
 `
 
 data.posts.forEach(post => {
+    
+    let wrap;
+    wrap = document.createElement("div")
 
     let element;
 
@@ -146,5 +149,6 @@ data.posts.forEach(post => {
         }
     }
 
-    body.appendChild(element);
+    wrap.appendChild(element);
+    body.appendChild(wrap);
 });
