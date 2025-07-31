@@ -131,7 +131,11 @@ data.posts.forEach(post => {
         element = document.createElement('img')
         element.className = "image-display";
 
-        element.src = post[urlParams.quality].url
+        if (urlParams.quality === "sample" && post["sample"].has === false) {
+            element.src = post["file"].url
+        } else {
+            element.src = post[urlParams.quality].url
+        }
     }
 
     element.style.borderRadius = `${urlParams.br}px`;
