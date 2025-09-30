@@ -51,15 +51,13 @@ function addCopyAction(post, element) {
         navigator.clipboard.writeText(`https://e621.net/posts/${post.id}`);
     })
 
-    element.setAttribute('data-action', "copy")
+    element.setAttribute('data-copy', "")
     element.setAttribute('title', `Click to copy #${post.id}'s link`)
 }
 
 function addNewTabAction(post, element) {
-    element.addEventListener("click", () => {
-        window.open(`https://e621.net/posts/${post.id}`);
-    })
-    element.setAttribute('data-action', "tab")
+    element.setAttribute('href', `https://e621.net/posts/${post.id}`)
+    element.setAttribute('target', `_blank`);
     element.setAttribute('title', `Click to open #${post.id} in a new tab`)
 }
 
@@ -108,51 +106,51 @@ body.style.cssText = `
 `
 
 data.posts.forEach(post => {
-    
-    let wrap;
-    wrap = document.createElement("div")
 
-    let element;
+    let mediaElement;
 
     if (post.file.ext === "webm" || post.file.ext === "mp4") {
-        element = document.createElement('video');
-        element.className = "video-display";
+        mediaElement = document.createElement('video');
+        mediaElement.className = "video-display";
 
         let sources = translateVideoQualities(post);
-        element.src = sources[urlParams.quality];
+        mediaElement.src = sources[urlParams.quality];
 
-        element.poster = post.preview.url;
+        mediaElement.poster = post.preview.url;
 
-        element.autoplay = true;
-        element.disablePictureInPicture = true;
-        element.loop = true;
-        element.muted = true;
+        mediaElement.autoplay = true;
+        mediaElement.disablePictureInPicture = true;
+        mediaElement.loop = true;
+        mediaElement.muted = true;
     } else {
-        element = document.createElement('img')
-        element.className = "image-display";
+        mediaElement = document.createElement('img')
+        mediaElement.className = "image-display";
 
         if (urlParams.quality === "sample" && post["sample"].has === false) {
-            element.src = post["file"].url
+            mediaElement.src = post["file"].url
         } else {
-            element.src = post[urlParams.quality].url
+            mediaElement.src = post[urlParams.quality].url
         }
     }
 
-    element.style.borderRadius = `${urlParams.br}px`;
+    mediaElement.style.borderRadius = `${urlParams.br}px`;
+
+    let linkElement;
+    linkElement = document.createElement("a");
 
     if (urlParams.nocopy !== "on") {
         switch (urlParams.act) {
             case "copy":
-                addCopyAction(post, element);
+                addCopyAction(post, linkElement);
                 break;
             case "tab":
-                addNewTabAction(post, element);
+                addNewTabAction(post, linkElement);
                 break
             default:
                 break;
         }
     }
 
-    wrap.appendChild(element);
-    body.appendChild(wrap);
+    linkElement.appendChild(mediaElement);
+    body.appendChild(linkElement);
 });

@@ -9,26 +9,20 @@ main {
   grid-auto-rows: 1fr;
 }
 
-main > div {
+main > a {
   position: relative;
 }
 
-main > div img,
-main > div video {
+main > a img,
+main > a video {
   position:absolute;
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-img[data-action = "copy"]:hover,
-video[data-action = "copy"]:hover {
+a[data-copy]:hover {
   cursor: copy;
-}
-
-img[data-action = "tab"]:hover,
-video[data-action = "tab"]:hover {
-  cursor: pointer;
 }
 
 div.error {
