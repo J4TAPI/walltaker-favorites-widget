@@ -6,6 +6,12 @@ function isValidIframe(element) {
     return true;
 }
 
+function decodeURL(string) {
+    const dummy = document.createElement("textarea")
+    dummy.innerHTML = string;
+    return dummy.value;
+}
+
 document.autofillForm.reset();
 
 document.autofillForm.addEventListener("submit", (e) => {
@@ -18,8 +24,8 @@ document.autofillForm.addEventListener("submit", (e) => {
         alert("Not a valid widget");
         return;
     }
-
-    const url = new URL(widget.src);
+    
+    const url = new URL(decodeURL(widget.src));
 
     if (!Object.hasOwn(url.searchParams, "act")) {
         document.generateForm["act"].value = "copy";
