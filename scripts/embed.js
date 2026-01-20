@@ -1,4 +1,4 @@
-const body = document.getElementById("body")
+const body = document.body
 
 function displayErrorMessage(message) {
     const element = document.createElement('div');
@@ -105,6 +105,8 @@ body.style.cssText = `
     gap:${urlParams.gap}px;
 `
 
+const imageTemplate = document.getElementById("img-temp")
+
 data.posts.forEach(post => {
 
     let mediaElement;
@@ -122,18 +124,27 @@ data.posts.forEach(post => {
         mediaElement.disablePictureInPicture = true;
         mediaElement.loop = true;
         mediaElement.muted = true;
+        mediaElement.style.borderRadius = `${urlParams.br}px`;
     } else {
-        mediaElement = document.createElement('img')
-        mediaElement.className = "image-display";
+        mediaElement = imageTemplate.content.cloneNode(true);
+        let progElement = mediaElement.getElementById("webp")
+        let stdElement = mediaElement.getElementById("jpg")
 
-        if (urlParams.quality === "sample" && post["sample"].has === false) {
-            mediaElement.src = post["file"].url
-        } else {
-            mediaElement.src = post[urlParams.quality].url
+        switch (urlParams.quality) {
+            case "preview":
+                progElement.srcset = post.preview.alt;
+                stdElement.src = post.preview.url;
+                break;
+            case "sample":
+                progElement.srcset = post.sample.has ? post.sample.alt : post.file.url;
+                stdElement.src = post.sample.has ? post.sample.url : post.file.url;
+                break;
+            default:
+                stdElement.src = post.file.url;
+                break;
         }
+        stdElement.style.borderRadius = `${urlParams.br}px`
     }
-
-    mediaElement.style.borderRadius = `${urlParams.br}px`;
 
     let linkElement;
     linkElement = document.createElement("a");

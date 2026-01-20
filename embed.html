@@ -4,9 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/styles/embed.css">
+    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> 
   </head>
   <body>
-    <main id="body"></main>
     <script src="/scripts/embed.js" type="module"></script>
+    <template id="img-temp">
+      <picture class="image-display">
+        <source id="webp" type="image/webp">
+        <img id="jpg" loading="lazy" decoding="async">
+      </picture>
+    </template>
   </body>
 </html>
