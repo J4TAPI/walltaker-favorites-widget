@@ -4,80 +4,22 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Walltaker Favorites Widget</title>
-    <link rel="stylesheet" href="/styles/style.css">
+    <style>
+body {
+  max-width: 650px;
+  margin: 0 auto;
+  font-family: sans-serif;
+}
+    </style>
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> 
     <meta name="color-scheme" content="light dark">
   </head>
   <body>
-    <h1>Walltaker Favorites Widget</h1>
-    <p>
-      A widget that lets you display a random selection of posts from your e621 favorites on your Walltaker profile. The posts are randomized everytime the widget is loaded.
-    </p>
-    <p>⚠ WTFW is still in development. Widgets generated right now may stop working in the future.
-    </p>
-    <hr>
-    <details>
-      <summary>Autofill from widget code</summary>
-      <small>
-        If you'd like to change your widget's settings through WTFW's generator, 
-        you can paste in your current widget <b>(iframe only !)</b> here, 
-        click on 'Autofill', change what you want, and Generate the widget again.
-      </small>
-      <form name="autofillForm">
-        <textarea name="widgetCode" style="width: 100%" placeholder="Insert widget code here..."></textarea>
-        <input type="submit" value="Autofill" />
-      </form>
-    </details>
-    <hr>
-    <form name="generateForm">
-      <label for="fav">Your e621 username</label>
-      <input type="text" name="fav" required />
-      
-      <label for="q">Filter <small>(e621 query; 34 tags MAX)</small></label>
-      <input type="text" name="q"/>
-
-      <label for="video">Allow videos</label>
-      <input type="checkbox" name="video">
-
-      <label for="count"># of posts</label>
-      <input type="number" name="count" placeholder="Defaults to 4" min="1" max="320"/>
-
-      <label for="ppr">Posts per row</label>
-      <input type="number" name="ppr" placeholder="Defaults to 4" min="1" max="320"/>
-
-      <label for="quality">Image quality</label>
-      <select name="quality">
-        <option value="file">High - Not recommended</option>
-        <option value="sample" selected>Medium - Recommended for fewer/larger images</option>
-        <option value="preview">Low - Recommended for more/smaller images</option>
-      </select>
-
-      <label for="gap">Border rounding <small>(in px)</small></label>
-      <input type="number" name="br" placeholder="Defaults to 6"/>
-
-      <label for="gap">Gap between posts <small>(in px)</small></label>
-      <input type="number" name="gap" placeholder="Defaults to 8"/>
-
-      <label for="act">On Click Action</label>
-      <select name="act">
-        <option value="0">Nothing</option>
-        <option value="copy">Copy link to clipboard</option>
-        <option value="tab" selected>Open in new tab</option>
-      </select>
-
-      <input type="text" name="otherattribs" aria-hidden="true" style="display:none;"/>
-      
-      <input type="submit" value="Generate" />
-    </form>
-    <hr />
-    <label for="output">Your widget code: </label><br />
-    <textarea id="output" readonly style="width: 100%"></textarea>
-    <label for="showcase">Preview (may differ from actual): </label><br />
-    <div id="showcase"></div>
-    <hr />
-    <p>Made by J4TAPI</p>
-    <p>Version 1.3.7</p>
-    <script src="/scripts/generate.js"></script>
-    <script src="/scripts/reverse.js"></script>
+    <h1>Service End of Life</h1>
+    <p>Walltaker Favorites Widget has reached the end of it's life, and will be fully shut down on February 6th, 2027.</p>
+    <p>If you have any widgets on your Walltaker profile backups (or anywhere else), I strongly advise you to remove all of them, as they will become prone to hijacking after the full shutdown.</p>
+    <p>The project's source code is now public domain. If you really care about it, please fork or download the source code from the <a href="https://github.com/J4TAPI/walltaker-favorites-widget" target="_blank">GitHub repository</a>, as the repo may be deleted in the future.</p>
+    <p>Thank you for everything.</p>
+    <p>❤</p>
   </body>
 </html>
